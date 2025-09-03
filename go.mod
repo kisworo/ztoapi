@@ -1,4 +1,4 @@
-module github.com/libaxuan/ztoapi
+module github.com/kisworo/ztoapi
 
 go 1.23.0
 
