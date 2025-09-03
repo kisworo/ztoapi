@@ -209,8 +209,67 @@ type OpenAIRequest struct {
 }
 
 type Message struct {
-	Role    string `json:"role"`
-	Content string `json:"content"`
+	Role    string      `json:"role"`
+	Content interface{} `json:"content"`
+}
+
+// Custom unmarshaling for Message to handle both string and array content
+func (m *Message) UnmarshalJSON(data []byte) error {
+	// Create a temporary struct to avoid infinite recursion
+	type Alias Message
+	aux := &struct {
+		Content json.RawMessage `json:"content"`
+		*Alias
+	}{
+		Alias: (*Alias)(m),
+	}
+	
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	
+	// Try to unmarshal as string first
+	var contentStr string
+	if err := json.Unmarshal(aux.Content, &contentStr); err == nil {
+		m.Content = contentStr
+		return nil
+	}
+	
+	// If that fails, try to unmarshal as array
+	var contentArr []interface{}
+	if err := json.Unmarshal(aux.Content, &contentArr); err == nil {
+		// Convert array to string representation
+		var strBuilder strings.Builder
+		for i, item := range contentArr {
+			if i > 0 {
+				strBuilder.WriteString("\n")
+			}
+			if itemStr, ok := item.(string); ok {
+				strBuilder.WriteString(itemStr)
+			} else {
+				itemBytes, _ := json.Marshal(item)
+				strBuilder.Write(itemBytes)
+			}
+		}
+		m.Content = strBuilder.String()
+		return nil
+	}
+	
+	// If both fail, set content as empty string
+	m.Content = ""
+	return nil
+}
+
+// GetContent returns the content as a string
+func (m *Message) GetContent() string {
+	if contentStr, ok := m.Content.(string); ok {
+		return contentStr
+	}
+	// If it's not a string, convert it to string
+	if contentBytes, err := json.Marshal(m.Content); err == nil {
+		return string(contentBytes)
+	}
+	return ""
 }
 
 // 上游请求结构
@@ -1370,12 +1429,21 @@ func handleChatCompletions(w http.ResponseWriter, r *http.Request) {
 	msgID := fmt.Sprintf("%d", time.Now().UnixNano())
 
 	// 构造上游请求
+	// Convert messages to ensure content is string format for upstream
+	upstreamMessages := make([]Message, len(req.Messages))
+	for i, msg := range req.Messages {
+		upstreamMessages[i] = Message{
+			Role:    msg.Role,
+			Content: msg.GetContent(),
+		}
+	}
+	
 	upstreamReq := UpstreamRequest{
 		Stream:   true, // 总是使用流式从上游获取
 		ChatID:   chatID,
 		ID:       msgID,
 		Model:    "0727-360B-API", // 上游实际模型ID
-		Messages: req.Messages,
+		Messages: upstreamMessages,
 		Params:   map[string]interface{}{},
 		Features: map[string]interface{}{
 			"enable_thinking": true,
