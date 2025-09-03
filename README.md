@@ -1,89 +1,89 @@
-# OpenAI兼容API代理 for Z.ai GLM-4.5
+# OpenAI Compatible API Proxy for Z.ai GLM-4.5
 
-这是一个为Z.ai GLM-4.5模型提供OpenAI兼容API接口的代理服务器。它允许你使用标准的OpenAI API格式与Z.ai的GLM-4.5模型进行交互，支持流式和非流式响应。
+This is a proxy server that provides OpenAI-compatible API interface for Z.ai GLM-4.5 model. It allows you to interact with Z.ai's GLM-4.5 model using standard OpenAI API format, supporting both streaming and non-streaming responses.
 
-> **注意**: 本项目来自fork  [OpenAI-Compatible-API-Proxy-for-Z](https://github.com/kbykb/OpenAI-Compatible-API-Proxy-for-Z)二次开发
+> **Note**: This project is forked from [OpenAI-Compatible-API-Proxy-for-Z](https://github.com/kbykb/OpenAI-Compatible-API-Proxy-for-Z) with additional development
 
 
-## ✨ 主要功能
+## ✨ Main Features
 
-- 🔄 **OpenAI API兼容**: 完全兼容OpenAI的API格式，无需修改客户端代码
-- 🌊 **流式响应支持**: 支持实时流式输出，提供更好的用户体验
-- 🔐 **身份验证**: 支持API密钥验证，确保服务安全
-- 🛠️ **灵活配置**: 通过环境变量进行灵活配置
-- 🐳 **Docker支持**: 提供Docker镜像，便于部署
-- 🌍 **CORS支持**: 支持跨域请求，便于前端集成
-- 📝 **思考过程展示**: 智能处理并展示模型的思考过程
-- 📊 **实时监控仪表板**: 提供Web仪表板，实时显示API转发情况和统计信息
+- 🔄 **OpenAI API Compatible**: Fully compatible with OpenAI API format, no client code modification needed
+- 🌊 **Streaming Response Support**: Supports real-time streaming output for better user experience
+- 🔐 **Authentication**: Supports API key validation for service security
+- 🛠️ **Flexible Configuration**: Flexible configuration through environment variables
+- 🐳 **Docker Support**: Provides Docker image for easy deployment
+- 🌍 **CORS Support**: Supports cross-origin requests for frontend integration
+- 📝 **Thinking Process Display**: Intelligently processes and displays model's thinking process
+- 📊 **Real-time Monitoring Dashboard**: Provides web dashboard showing real-time API forwarding status and statistics
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 环境要求
+### Requirements
 
-- Go 1.23 或更高版本
-- Z.ai 的访问令牌
+- Go 1.23 or higher
+- Z.ai access token
 
-### 本地部署
+### Local Deployment
 
-1. **克隆仓库**
+1. **Clone Repository**
    ```bash
-   git clone https://github.com/your-username/ZtoApi.git
-   cd ZtoApi
+   git clone https://github.com/kisworo/ztoapi.git
+   cd ztoapi
    ```
 
-2. **配置环境变量**
+2. **Configure Environment Variables**
    ```bash
    cp config.env .env.local
-   # 编辑 .env.local 文件，设置你的 ZAI_TOKEN
+   # Edit .env.local file and set your ZAI_TOKEN
    ```
 
-3. **启动服务**
+3. **Start Service**
    ```bash
-   # 使用启动脚本（推荐）
+   # Use startup script (recommended)
    ./start.sh
    
-   # 或直接运行
+   # Or run directly
    go run main.go
    ```
 
-4. **测试服务**
+4. **Test Service**
     ```bash
     curl http://localhost:9090/v1/models
     ```
 
-5. **访问API文档**
+5. **Access API Documentation**
     
-    启动服务后，可以通过浏览器访问以下地址查看完整的API文档：
+    After starting the service, you can access the complete API documentation through your browser:
     ```
     http://localhost:9090/docs
     ```
     
-    API文档提供了以下功能：
-    - 详细的API端点说明
-    - 请求参数和响应格式
-    - 多种编程语言的使用示例（Python、cURL、JavaScript）
-    - 错误处理说明
+    The API documentation provides:
+    - Detailed API endpoint descriptions
+    - Request parameters and response formats
+    - Usage examples in multiple programming languages (Python, cURL, JavaScript)
+    - Error handling explanations
 
-5. **访问Dashboard**
+6. **Access Dashboard**
    
-   启动服务后，可以通过浏览器访问以下地址查看实时监控仪表板：
+   After starting the service, you can access the real-time monitoring dashboard through your browser:
    ```
    http://localhost:9090/dashboard
    ```
    
-   Dashboard提供了以下功能：
-   - 实时显示API请求统计信息（总请求数、成功请求数、失败请求数、平均响应时间）
-   - 显示最近100条请求的详细信息（时间、方法、路径、状态码、耗时、客户端IP）
-   - 数据每5秒自动刷新一次
+   The dashboard provides:
+   - Real-time API request statistics (total requests, successful requests, failed requests, average response time)
+   - Detailed information of the latest 100 requests (time, method, path, status code, duration, client IP)
+   - Data automatically refreshes every 5 seconds
 
-### Docker部署
+### Docker Deployment
 
-1. **构建镜像**
+1. **Build Image**
    ```bash
    docker build -t zto-api .
    ```
 
-2. **运行容器**
+2. **Run Container**
    ```bash
    docker run -p 9090:9090 \
      -e ZAI_TOKEN=your_z_ai_token \
@@ -91,28 +91,28 @@
      zto-api
    ```
 
-## Render部署
+## Render Deployment
 
-1. Fork这个仓库到你的GitHub账户
+1. Fork this repository to your GitHub account
 
-2. 在Render上创建新的Web Service：
-   - 连接你的GitHub仓库
-   - 选择Docker作为环境
-   - 设置以下环境变量：
-   - `ZAI_TOKEN`: Z.ai 的访问令牌 (可选，不提供将使用匿名token)
-   - `DEFAULT_KEY`: 客户端API密钥 (可选，默认: sk-your-key)
-   - `MODEL_NAME`: 显示的模型名称 (可选，默认: GLM-4.5)
-   - `PORT`: 服务监听端口 (Render会自动设置)
+2. Create a new Web Service on Render:
+   - Connect your GitHub repository
+   - Select Docker as environment
+   - Set the following environment variables:
+   - `ZAI_TOKEN`: Z.ai access token (optional, will use anonymous token if not provided)
+   - `DEFAULT_KEY`: Client API key (optional, default: sk-your-key)
+   - `MODEL_NAME`: Display model name (optional, default: GLM-4.5)
+   - `PORT`: Service listening port (Render will set automatically)
 
-3. 部署完成后，使用Render提供的URL作为OpenAI API的base_url
+3. After deployment, use the URL provided by Render as the base_url for OpenAI API
 
-## ⚙️ 环境变量配置
+## ⚙️ Environment Variable Configuration
 
-本项目支持通过环境变量进行配置，提供灵活的部署和运行选项。
+This project supports configuration through environment variables, providing flexible deployment and runtime options.
 
-### 🚀 快速开始
+### 🚀 Quick Start
 
-#### 1. 使用启动脚本（推荐）
+#### 1. Using Startup Scripts (Recommended)
 
 **macOS/Linux:**
 ```bash
@@ -124,7 +124,7 @@
 start.bat
 ```
 
-#### 2. 手动设置环境变量
+#### 2. Manual Environment Variable Setup
 
 **macOS/Linux:**
 ```bash
@@ -142,7 +142,7 @@ set PORT=9090
 go run main.go
 ```
 
-#### 3. Docker运行
+#### 3. Docker Run
 
 ```bash
 docker run -p 9090:9090 \
@@ -152,75 +152,75 @@ docker run -p 9090:9090 \
   zto-api
 ```
 
-### 📋 环境变量列表
+### 📋 Environment Variables List
 
-#### 🔑 必需配置
+#### 🔑 Required Configuration
 
-无必需配置。所有配置都有合理的默认值。
+No required configuration. All configurations have reasonable default values.
 
-#### ⚙️ 可选配置
+#### ⚙️ Optional Configuration
 
-| 变量名 | 说明 | 默认值 | 示例 |
-|--------|------|--------|------|
-| `ZAI_TOKEN` | Z.ai 访问令牌 | 空（使用匿名token） | `eyJhbGciOiJFUzI1NiIs...` |
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `ZAI_TOKEN` | Z.ai access token | Empty (uses anonymous token) | `eyJhbGciOiJFUzI1NiIs...` |
 
-#### ⚙️ 可选配置
+#### ⚙️ Optional Configuration
 
-| 变量名 | 说明 | 默认值 | 示例 |
-|--------|------|--------|------|
-| `DEFAULT_KEY` | 客户端API密钥 | `sk-your-key` | `sk-my-api-key` |
-| `MODEL_NAME` | 显示模型名称 | `GLM-4.5` | `GLM-4.5-Pro` |
-| `PORT` | 服务监听端口 | `9090` | `9000` |
-| `DEBUG_MODE` | 调试模式开关 | `true` | `false` |
-| `DEFAULT_STREAM` | 默认流式响应 | `true` | `false` |
-| `DASHBOARD_ENABLED` | Dashboard功能开关 | `true` | `false` |
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `DEFAULT_KEY` | Client API key | `sk-your-key` | `sk-my-api-key` |
+| `MODEL_NAME` | Display model name | `GLM-4.5` | `GLM-4.5-Pro` |
+| `PORT` | Service listening port | `9090` | `9000` |
+| `DEBUG_MODE` | Debug mode switch | `true` | `false` |
+| `DEFAULT_STREAM` | Default streaming response | `true` | `false` |
+| `DASHBOARD_ENABLED` | Dashboard feature switch | `true` | `false` |
 
-#### 🔧 高级配置
+#### 🔧 Advanced Configuration
 
-| 变量名 | 说明 | 默认值 | 示例 |
-|--------|------|--------|------|
-| `UPSTREAM_URL` | 上游API地址 | `https://chat.z.ai/api/chat/completions` | 自定义URL |
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `UPSTREAM_URL` | Upstream API address | `https://chat.z.ai/api/chat/completions` | Custom URL |
 
-### 📁 配置文件
+### 📁 Configuration Files
 
-#### 支持的配置文件（按优先级排序）
+#### Supported Configuration Files (by priority)
 
-1. `.env.local` - 本地环境配置（推荐）
-2. `.env` - 环境配置
-3. `config.env` - 配置模板
+1. `.env.local` - Local environment configuration (recommended)
+2. `.env` - Environment configuration
+3. `config.env` - Configuration template
 
-#### 配置文件示例
+#### Configuration File Example
 
 ```bash
-# 复制配置文件
+# Copy configuration file
 cp config.env .env.local
 
-# 编辑配置文件
+# Edit configuration file
 nano .env.local
 ```
 
-### 🔐 获取 Z.ai Token
+### 🔐 Getting Z.ai Token
 
-#### 方法1：浏览器开发者工具
+#### Method 1: Browser Developer Tools
 
-1. 登录 [Z.ai](https://chat.z.ai)
-2. 打开浏览器开发者工具（F12）
-3. 切换到 Network 标签页
-4. 发送一条消息
-5. 在请求中找到 `Authorization` 头部的 Bearer token
+1. Login to [Z.ai](https://chat.z.ai)
+2. Open browser developer tools (F12)
+3. Switch to Network tab
+4. Send a message
+5. Find the Bearer token in the `Authorization` header of requests
 
-#### 方法2：Cookie 方式
+#### Method 2: Cookie Method
 
-1. 登录 Z.ai 后，在开发者工具中查看 Cookies
-2. 找到包含认证信息的 cookie
+1. After logging into Z.ai, check Cookies in developer tools
+2. Find cookies containing authentication information
 
-#### 方法3：匿名Token
+#### Method 3: Anonymous Token
 
-本项目支持自动获取匿名token，无需手动配置。当 `ANON_TOKEN_ENABLED` 常量为 `true` 时，系统会自动为每次对话获取不同的匿名token，避免共享记忆。
+This project supports automatic anonymous token acquisition without manual configuration. When the `ANON_TOKEN_ENABLED` constant is `true`, the system will automatically acquire different anonymous tokens for each conversation, avoiding shared memory.
 
-### 🎯 使用示例
+### 🎯 Usage Examples
 
-#### 基本配置
+#### Basic Configuration
 
 ```bash
 # .env.local
@@ -231,7 +231,7 @@ PORT=9000
 DEBUG_MODE=false
 ```
 
-#### 生产环境配置
+#### Production Environment Configuration
 
 ```bash
 # .env.production
@@ -243,7 +243,7 @@ DEBUG_MODE=false
 DEFAULT_STREAM=true
 ```
 
-#### 开发环境配置
+#### Development Environment Configuration
 
 ```bash
 # .env.development
@@ -256,88 +256,88 @@ DEFAULT_STREAM=true
 DASHBOARD_ENABLED=true
 ```
 
-### 📊 Dashboard功能
+### 📊 Dashboard Features
 
-本项目提供了一个Web仪表板，用于实时监控API转发情况和统计信息。
+This project provides a web dashboard for real-time monitoring of API forwarding status and statistics.
 
-#### 功能特点
+#### Features
 
-- 实时显示API请求统计信息（总请求数、成功请求数、失败请求数、平均响应时间）
-- 显示最近100条请求的详细信息（时间、方法、路径、状态码、耗时、客户端IP）
-- 数据每5秒自动刷新一次
-- 响应式设计，支持各种设备访问
+- Real-time display of API request statistics (total requests, successful requests, failed requests, average response time)
+- Shows detailed information of the latest 100 requests (time, method, path, status code, duration, client IP)
+- Data automatically refreshes every 5 seconds
+- Responsive design, supports access from various devices
 
-#### 访问方式
+#### Access Method
 
-启动服务后，通过浏览器访问以下地址：
+After starting the service, access through your browser:
 ```
 http://localhost:9090/dashboard
 ```
 
-#### 配置选项
+#### Configuration Options
 
-通过 `DASHBOARD_ENABLED` 环境变量控制Dashboard功能的开启和关闭：
+Control Dashboard feature on/off through the `DASHBOARD_ENABLED` environment variable:
 
 ```bash
-# 启用Dashboard（默认）
+# Enable Dashboard (default)
 DASHBOARD_ENABLED=true
 
-# 禁用Dashboard
+# Disable Dashboard
 DASHBOARD_ENABLED=false
 ```
 
-#### 使用场景
+#### Use Cases
 
-- **开发调试**: 实时查看API请求情况，便于调试和问题排查
-- **性能监控**: 监控API响应时间和成功率，评估系统性能
-- **安全审计**: 查看请求来源和频率，发现异常访问模式
+- **Development Debugging**: Real-time view of API request status for debugging and troubleshooting
+- **Performance Monitoring**: Monitor API response time and success rate to evaluate system performance
+- **Security Audit**: View request sources and frequency to detect abnormal access patterns
 
-### 🔄 重启服务
+### 🔄 Restart Service
 
-修改环境变量后，需要重启服务使配置生效：
+After modifying environment variables, restart the service for configuration to take effect:
 
 ```bash
-# 停止当前服务
+# Stop current service
 Ctrl+C
 
-# 重新启动
+# Restart
 ./start.sh
 ```
 
-### 🚨 注意事项
+### 🚨 Important Notes
 
-1. **Token 安全**: 不要将真实的 Z.ai token 提交到代码仓库
-2. **配置文件**: 建议将 `.env.local` 添加到 `.gitignore`
-3. **权限设置**: 确保启动脚本有执行权限 (`chmod +x start.sh`)
-4. **端口冲突**: 确保配置的端口没有被其他服务占用
-5. **匿名Token**: 使用匿名token时，每次对话都会有独立的上下文
-6. **思考过程**: 项目会自动处理模型的思考过程，可通过 `THINK_TAGS_MODE` 常量调整显示方式
+1. **Token Security**: Do not commit real Z.ai tokens to code repository
+2. **Configuration Files**: Recommend adding `.env.local` to `.gitignore`
+3. **Permission Settings**: Ensure startup scripts have execute permissions (`chmod +x start.sh`)
+4. **Port Conflicts**: Ensure configured port is not occupied by other services
+5. **Anonymous Token**: When using anonymous tokens, each conversation has independent context
+6. **Thinking Process**: Project automatically handles model's thinking process, display mode can be adjusted through `THINK_TAGS_MODE` constant
 
-## 📖 API使用示例
+## 📖 API Usage Examples
 
-### Python示例
+### Python Example
 
 ```python
 import openai
 
-# 配置客户端
+# Configure client
 client = openai.OpenAI(
-    api_key="your-api-key",  # 对应 DEFAULT_KEY
+    api_key="your-api-key",  # corresponds to DEFAULT_KEY
     base_url="http://localhost:9090/v1"
 )
 
-# 非流式请求
+# Non-streaming request
 response = client.chat.completions.create(
     model="GLM-4.5",
-    messages=[{"role": "user", "content": "你好，请介绍一下自己"}]
+    messages=[{"role": "user", "content": "Hello, please introduce yourself"}]
 )
 
 print(response.choices[0].message.content)
 
-# 流式请求
+# Streaming request
 response = client.chat.completions.create(
     model="GLM-4.5",
-    messages=[{"role": "user", "content": "请写一首关于春天的诗"}],
+    messages=[{"role": "user", "content": "Please write a poem about spring"}],
     stream=True
 )
 
@@ -346,31 +346,31 @@ for chunk in response:
         print(chunk.choices[0].delta.content, end="")
 ```
 
-### curl示例
+### curl Example
 
 ```bash
-# 非流式请求
+# Non-streaming request
 curl -X POST http://localhost:9090/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer your-api-key" \
   -d '{
     "model": "GLM-4.5",
-    "messages": [{"role": "user", "content": "你好"}],
+    "messages": [{"role": "user", "content": "Hello"}],
     "stream": false
   }'
 
-# 流式请求
+# Streaming request
 curl -X POST http://localhost:9090/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer your-api-key" \
   -d '{
     "model": "GLM-4.5",
-    "messages": [{"role": "user", "content": "你好"}],
+    "messages": [{"role": "user", "content": "Hello"}],
     "stream": true
   }'
 ```
 
-### JavaScript示例
+### JavaScript Example
 
 ```javascript
 const fetch = require('node-fetch');
@@ -390,7 +390,7 @@ async function chatWithGLM(message, stream = false) {
   });
 
   if (stream) {
-    // 处理流式响应
+    // Handle streaming response
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     
@@ -405,7 +405,7 @@ async function chatWithGLM(message, stream = false) {
         if (line.startsWith('data: ')) {
           const data = line.slice(6);
           if (data === '[DONE]') {
-            console.log('\n流式响应完成');
+            console.log('\nStreaming response completed');
             return;
           }
           
@@ -416,103 +416,101 @@ async function chatWithGLM(message, stream = false) {
               process.stdout.write(content);
             }
           } catch (e) {
-            // 忽略解析错误
+            // Ignore parsing errors
           }
         }
       }
     }
   } else {
-    // 处理非流式响应
+    // Handle non-streaming response
     const data = await response.json();
     console.log(data.choices[0].message.content);
   }
 }
 
-// 使用示例
-chatWithGLM('你好，请介绍一下JavaScript', false);
+// Usage example
+chatWithGLM('Hello, please introduce JavaScript', false);
 ```
 
-## 🔧 故障排除
+## 🔧 Troubleshooting
 
-### 常见问题
+### Common Issues
 
-1. **连接失败**
-   - 检查服务是否正常运行：`curl http://localhost:9090/v1/models`
-   - 访问API文档：`http://localhost:9090/docs`
-   - 确认端口配置正确
+1. **Connection Failed**
+   - Check if service is running normally: `curl http://localhost:9090/v1/models`
+   - Access API documentation: `http://localhost:9090/docs`
+   - Confirm port configuration is correct
 
-2. **认证失败**
-   - 检查 `DEFAULT_KEY` 环境变量设置
-   - 确认请求头中的 `Authorization` 格式正确
+2. **Authentication Failed**
+   - Check `DEFAULT_KEY` environment variable setting
+   - Confirm `Authorization` header format is correct in requests
 
-3. **Z.ai Token无效**
-   - 检查 `ZAI_TOKEN` 环境变量设置
-   - 确认Token未过期
+3. **Invalid Z.ai Token**
+   - Check `ZAI_TOKEN` environment variable setting
+   - Confirm token has not expired
 
-4. **思考过程显示异常**
-   - 检查 `DEBUG_MODE` 是否启用
-   - 查看服务日志获取详细信息
+4. **Thinking Process Display Issues**
+   - Check if `DEBUG_MODE` is enabled
+   - View service logs for detailed information
 
-5. **端口被占用**: 修改 `PORT` 环境变量或停止占用端口的服务
-6. **权限不足**: 确保启动脚本有执行权限
-7. **配置未生效**: 重启服务或检查配置文件语法
-8. **流式响应问题**: 确认 `DEFAULT_STREAM` 设置正确，检查客户端是否支持流式响应
+5. **Port Occupied**: Modify `PORT` environment variable or stop service occupying the port
+6. **Insufficient Permissions**: Ensure startup scripts have execute permissions
+7. **Configuration Not Taking Effect**: Restart service or check configuration file syntax
+8. **Streaming Response Issues**: Confirm `DEFAULT_STREAM` setting is correct, check if client supports streaming response
 
-### 调试模式
+### Debug Mode
 
-启用调试模式以获取详细日志：
+Enable debug mode to get detailed logs:
 
 ```bash
 export DEBUG_MODE=true
 go run main.go
 ```
 
-### 网络问题排查
+### Network Troubleshooting
 
-如果遇到网络连接问题，可以尝试：
+If you encounter network connection issues, try:
 
-1. 检查防火墙设置
-2. 确认 `UPSTREAM_URL` 可访问
-3. 测试网络连通性：
+1. Check firewall settings
+2. Confirm `UPSTREAM_URL` is accessible
+3. Test network connectivity:
    ```bash
    curl https://chat.z.ai/api/chat/completions
    ```
 
-### 性能优化
+### Performance Optimization
 
-1. **减少日志输出**: 设置 `DEBUG_MODE=false`
-2. **调整超时时间**: 修改代码中的 `http.Client` 超时设置
-3. **使用反向代理**: 在生产环境中建议使用 Nginx 等反向代理
+1. **Reduce Log Output**: Set `DEBUG_MODE=false`
+2. **Adjust Timeout**: Modify `http.Client` timeout settings in code
+3. **Use Reverse Proxy**: Recommend using Nginx or similar reverse proxy in production
 
-## 🤝 贡献指南
+## 🤝 Contributing
 
-欢迎提交 Issue 和 Pull Request！请确保：
+Welcome to submit Issues and Pull Requests! Please ensure:
 
-1. 代码符合 Go 的代码风格
-2. 提交前运行测试
-3. 更新相关文档
-4. 遵循项目的代码结构和命名规范
+1. Code follows Go coding style
+2. Run tests before submitting
+3. Update related documentation
+4. Follow project code structure and naming conventions
 
-### 开发流程
+### Development Workflow
 
-1. Fork 本仓库
-2. 创建特性分支：`git checkout -b feature/new-feature`
-3. 提交更改：`git commit -am 'Add new feature'`
-4. 推送分支：`git push origin feature/new-feature`
-5. 提交 Pull Request
+1. Fork this repository
+2. Create feature branch: `git checkout -b feature/new-feature`
+3. Commit changes: `git commit -am 'Add new feature'`
+4. Push branch: `git push origin feature/new-feature`
+5. Submit Pull Request
 
-## 📄 许可证
+## 📄 License
 
-本项目采用 MIT 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
+This project is licensed under the MIT License. See [LICENSE](LICENSE) file for details.
 
-## ⚠️ 免责声明
+## ⚠️ Disclaimer
 
-本项目与 Z.ai 官方无关，使用前请确保遵守 Z.ai 的服务条款。开发者不对因使用本项目而产生的任何问题负责。
-本项目与 Z.ai 官方无关，使用前请确保遵守 Z.ai 的服务条款。开发者不对因使用本项目而产生的任何问题负责。
-本项目与 Z.ai 官方无关，使用前请确保遵守 Z.ai 的服务条款。开发者不对因使用本项目而产生的任何问题负责。
+This project is not affiliated with Z.ai official. Please ensure compliance with Z.ai's terms of service before use. Developers are not responsible for any issues arising from the use of this project.
 
-## 📞 联系方式
+## 📞 Contact
 
-如有问题或建议，请通过以下方式联系：
+For questions or suggestions, please contact through:
 
-- 提交 [Issue](https://github.com/libaxuan/ZtoApi/issues)
+- Submit [Issue](https://github.com/kisworo/ztoapi/issues)
